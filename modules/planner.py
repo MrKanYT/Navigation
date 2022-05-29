@@ -24,9 +24,22 @@ class Toolbar(Frame):
         self.save_button = Button(self, text="Save")
         self.save_button.grid(row=0, column=0, padx=10, pady=20, sticky="nswe")
 
+
 class Area:
     id = 0
-    points = []
+    points = [[]]
+
+    def __init__(self, area_id, start_pos):
+        self.id = area_id
+        self.points = [start_pos]
+
+    def modify(self, points):
+        self.points = points
+
+    def get_rectangle_points(self) -> tuple:
+        pos0 = (min([p[0] for p in self.points]), min([p[1] for p in self.points]))
+        pos1 = (max([p[0] for p in self.points]), max([p[1] for p in self.points]))
+        return pos0, pos1
 
 
 class Core:
@@ -35,10 +48,10 @@ class Core:
 
     def create_area(self, rect_id, start_pos):
         print(f"Create area: {start_pos=}")
-        self.areas[rect_id] = (start_pos[0], start_pos[1], start_pos[0], start_pos[1])
+        self.areas[rect_id] = Area(rect_id, start_pos)
 
     def modify_area(self, area_id, new_start_pos, new_end_pos):
-        self.areas[area_id] = (new_start_pos[0], new_start_pos[1], new_end_pos[0], new_end_pos[1])
+        self.areas[area_id].modify()
 
     def get_coords(self, area_id):
         return self.areas[area_id]

@@ -1,0 +1,3 @@
+
+MAIN_COLOR = ""
+SUB_COLOR = ""
